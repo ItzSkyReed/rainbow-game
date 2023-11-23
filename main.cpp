@@ -21,7 +21,7 @@ using std::cin;
 using std::endl;
 using std::to_string;
 const string pathToColors = R"(C:\Users\itzsk\CLionProjects\untitled1\colors.txt)"; // Путь до файла c цветами!
-const string pathToHistory = R"(C:\Users\itzsk\CLionProjects\untitled1\game_history.txt)"; // Путь до файла c цветами!
+const string pathToHistory = R"(C:\Users\itzsk\CLionProjects\untitled1\game_history.txt)"; // Путь до файла c историей!
 
 int game_num = 0;
 int allPoints = 0;
