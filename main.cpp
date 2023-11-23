@@ -20,74 +20,74 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::to_string;
-const string pathToColors = R"(C:\Users\itzsk\CLionProjects\untitled1\colors.txt)"; // Путь до файла c цветами!
-const string pathToHistory = R"(C:\Users\itzsk\CLionProjects\untitled1\game_history.txt)"; // Путь до файла c цветами!
+const string pathToColors = R"(C:\Users\itzsk\CLionProjects\untitled1\colors.txt)"; // РџСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° c С†РІРµС‚Р°РјРё!
+const string pathToHistory = R"(C:\Users\itzsk\CLionProjects\untitled1\game_history.txt)"; // РџСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° c С†РІРµС‚Р°РјРё!
 
 int game_num = 0;
 int allPoints = 0;
 string PlayerName;
 vector<string> all_colors;
 
-vector<string> getAllColors(const string &path); // Возвращает массив всех цветов из colors.txt
-void PrintAllColors(const std::vector<std::string> &allColors); // Вывод всех возможных цветов перед игрой в консоль.
-vector<string> shuffleVector(const vector<string> &allColors, bool unique_sort); // Получение перемешенного вектора
-vector<string> StringToVector(const string &colors_string); // Создание вектора из строки
-string vectorToString(const vector<string> &vector); // Создание строки из вектора через точку с запятой
-vector<bool> colorMatchOrderMatch(vector<string> &userColors, vector<string> &pcColors); // Проверка на точное совпадение.
-vector<bool> colorMatchNoOrder(vector<string> &userColors, vector<string> &pcColors); // Проверка на неточное совпадение.
-void appendToFile(const std::string &line); // Запись результата игры в файл
-bool getUserInput(bool &getInput, const string &message); // Обработка ввода bool-переменных
+vector<string> getAllColors(const string &path); // Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РІСЃРµС… С†РІРµС‚РѕРІ РёР· colors.txt
+void PrintAllColors(const std::vector<std::string> &allColors); // Р’С‹РІРѕРґ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚РѕРІ РїРµСЂРµРґ РёРіСЂРѕР№ РІ РєРѕРЅСЃРѕР»СЊ.
+vector<string> shuffleVector(const vector<string> &allColors, bool unique_sort); // РџРѕР»СѓС‡РµРЅРёРµ РїРµСЂРµРјРµС€РµРЅРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
+vector<string> StringToVector(const string &colors_string); // РЎРѕР·РґР°РЅРёРµ РІРµРєС‚РѕСЂР° РёР· СЃС‚СЂРѕРєРё
+string vectorToString(const vector<string> &vector); // РЎРѕР·РґР°РЅРёРµ СЃС‚СЂРѕРєРё РёР· РІРµРєС‚РѕСЂР° С‡РµСЂРµР· С‚РѕС‡РєСѓ СЃ Р·Р°РїСЏС‚РѕР№
+vector<bool> colorMatchOrderMatch(vector<string> &userColors, vector<string> &pcColors); // РџСЂРѕРІРµСЂРєР° РЅР° С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ.
+vector<bool> colorMatchNoOrder(vector<string> &userColors, vector<string> &pcColors); // РџСЂРѕРІРµСЂРєР° РЅР° РЅРµС‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ.
+void appendToFile(const std::string &line); // Р—Р°РїРёСЃСЊ СЂРµР·СѓР»СЊС‚Р°С‚Р° РёРіСЂС‹ РІ С„Р°Р№Р»
+bool getUserInput(bool &getInput, const string &message); // РћР±СЂР°Р±РѕС‚РєР° РІРІРѕРґР° bool-РїРµСЂРµРјРµРЅРЅС‹С…
 
 void game(const vector<string> &allColors) {
-    game_num += 1; // Увеличиваем счётчик игр
-    // Спрашиваем пользователя, хочет ли он чтобы цвета были уникальными
+    game_num += 1; // РЈРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРє РёРіСЂ
+    // РЎРїСЂР°С€РёРІР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, С…РѕС‡РµС‚ Р»Рё РѕРЅ С‡С‚РѕР±С‹ С†РІРµС‚Р° Р±С‹Р»Рё СѓРЅРёРєР°Р»СЊРЅС‹РјРё
     bool uniqueColorsMode;
-    getUserInput(uniqueColorsMode, "Введите '1' если хотите чтобы цвета не повторялись, иначе введите '0': "); // Обработка ошибок.
+    getUserInput(uniqueColorsMode, "Р’РІРµРґРёС‚Рµ '1' РµСЃР»Рё С…РѕС‚РёС‚Рµ С‡С‚РѕР±С‹ С†РІРµС‚Р° РЅРµ РїРѕРІС‚РѕСЂСЏР»РёСЃСЊ, РёРЅР°С‡Рµ РІРІРµРґРёС‚Рµ '0': "); // РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє.
     cout << endl;
 
-    // Создаем вектор цветов в зависимости от ответа
+    // РЎРѕР·РґР°РµРј РІРµРєС‚РѕСЂ С†РІРµС‚РѕРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕС‚РІРµС‚Р°
     vector<string> colorsToGuess = shuffleVector(allColors, uniqueColorsMode);
-    if (uniqueColorsMode) cout << "Выбран режим без повторения цветов." << endl;
-    else cout << "Выбран режим с повторением цветов." << endl;
+    if (uniqueColorsMode) cout << "Р’С‹Р±СЂР°РЅ СЂРµР¶РёРј Р±РµР· РїРѕРІС‚РѕСЂРµРЅРёСЏ С†РІРµС‚РѕРІ." << endl;
+    else cout << "Р’С‹Р±СЂР°РЅ СЂРµР¶РёРј СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ." << endl;
 
-    PrintAllColors(allColors); // Сообщаем пользователю о всех возможных цветах (из файла colors.txt)
+    PrintAllColors(allColors); // РЎРѕРѕР±С‰Р°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ Рѕ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚Р°С… (РёР· С„Р°Р№Р»Р° colors.txt)
 
-    PrintAllColors(colorsToGuess); // Сообщаем пользователю о всех возможных цветах (из файла colors.txt)
+    PrintAllColors(colorsToGuess); // РЎРѕРѕР±С‰Р°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ Рѕ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚Р°С… (РёР· С„Р°Р№Р»Р° colors.txt)
 
-    // Запись в файл
-    string gameType = (uniqueColorsMode) ? "без повторений цветов" : "с повторением цветов";
+    // Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р»
+    string gameType = (uniqueColorsMode) ? "Р±РµР· РїРѕРІС‚РѕСЂРµРЅРёР№ С†РІРµС‚РѕРІ" : "СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ";
     string correctColorsString = vectorToString(colorsToGuess);
-    appendToFile("Игра " + to_string(game_num) + "; Режим: " + gameType + "; Правильная последовательность цветов: " + correctColorsString);
+    appendToFile("РРіСЂР° " + to_string(game_num) + "; Р РµР¶РёРј: " + gameType + "; РџСЂР°РІРёР»СЊРЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ С†РІРµС‚РѕРІ: " + correctColorsString);
 
-    // Процесс игры
-    cout << "Игра началась." << endl << endl;
+    // РџСЂРѕС†РµСЃСЃ РёРіСЂС‹
+    cout << "РРіСЂР° РЅР°С‡Р°Р»Р°СЃСЊ." << endl << endl;
     cin.ignore();
     unsigned short pointsAndAttempts = 10;
 
     while (pointsAndAttempts > 0) {
-        std::map<string, short> colorsCountMap; // Создаем словарь, чтобы хранить, сколько раз каждый цвет встречается для режима с повторением цветов
+        std::map<string, short> colorsCountMap; // РЎРѕР·РґР°РµРј СЃР»РѕРІР°СЂСЊ, С‡С‚РѕР±С‹ С…СЂР°РЅРёС‚СЊ, СЃРєРѕР»СЊРєРѕ СЂР°Р· РєР°Р¶РґС‹Р№ С†РІРµС‚ РІСЃС‚СЂРµС‡Р°РµС‚СЃСЏ РґР»СЏ СЂРµР¶РёРјР° СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ
 
-        // Проходим по вектору и увеличиваем счетчик для каждой строки в map
+        // РџСЂРѕС…РѕРґРёРј РїРѕ РІРµРєС‚РѕСЂСѓ Рё СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡РµС‚С‡РёРє РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё РІ map
         for (const auto &str: colorsToGuess) {
             colorsCountMap[str]++;
         }
 
-        cout << "Попыток осталось: " << pointsAndAttempts << endl;
+        cout << "РџРѕРїС‹С‚РѕРє РѕСЃС‚Р°Р»РѕСЃСЊ: " << pointsAndAttempts << endl;
 
-        // Создание вектора из строки цветов пользователя
+        // РЎРѕР·РґР°РЅРёРµ РІРµРєС‚РѕСЂР° РёР· СЃС‚СЂРѕРєРё С†РІРµС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         vector<string> userColorsVector;
         string colorsFromUser;
         do {
-            cout << "Введите четыре цвета через ', ': ";
+            cout << "Р’РІРµРґРёС‚Рµ С‡РµС‚С‹СЂРµ С†РІРµС‚Р° С‡РµСЂРµР· ', ': ";
             getline(cin, colorsFromUser);
             userColorsVector = StringToVector(colorsFromUser);
-            if (userColorsVector.size() != 4) cout << "Вы ввели не 4 цвета. Введите по новому." << endl;
+            if (userColorsVector.size() != 4) cout << "Р’С‹ РІРІРµР»Рё РЅРµ 4 С†РІРµС‚Р°. Р’РІРµРґРёС‚Рµ РїРѕ РЅРѕРІРѕРјСѓ." << endl;
         } while (userColorsVector.size() != 4);
 
-        // Запись в файл
-        appendToFile("Попытка " + to_string(10 - pointsAndAttempts) + "; Цвета пользователя: " + colorsFromUser);
+        // Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р»
+        appendToFile("РџРѕРїС‹С‚РєР° " + to_string(10 - pointsAndAttempts) + "; Р¦РІРµС‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: " + colorsFromUser);
 
-        // Вывод цветов с точным совпадением
+        // Р’С‹РІРѕРґ С†РІРµС‚РѕРІ СЃ С‚РѕС‡РЅС‹Рј СЃРѕРІРїР°РґРµРЅРёРµРј
         vector<bool> matchedColors = colorMatchOrderMatch(userColorsVector, colorsToGuess);
         for (int i = 0; i < 4; i++) {
             string color;
@@ -95,21 +95,21 @@ void game(const vector<string> &allColors) {
                 color = userColorsVector[i];
                 colorsCountMap[color]--;
                 color[0] = std::toupper(color[0]);
-            } else color = "Не угадан";
-            cout << "Цвет " << i + 1 << ": " << color << endl;
+            } else color = "РќРµ СѓРіР°РґР°РЅ";
+            cout << "Р¦РІРµС‚ " << i + 1 << ": " << color << endl;
         }
 
-        // Проверка на победу!
+        // РџСЂРѕРІРµСЂРєР° РЅР° РїРѕР±РµРґСѓ!
         if (std::equal(colorsToGuess.begin(), colorsToGuess.end(), userColorsVector.begin())) {
-            cout << PlayerName << ", вы победили, набрав " << pointsAndAttempts << " баллов!" << endl;
+            cout << PlayerName << ", РІС‹ РїРѕР±РµРґРёР»Рё, РЅР°Р±СЂР°РІ " << pointsAndAttempts << " Р±Р°Р»Р»РѕРІ!" << endl;
             allPoints += pointsAndAttempts;
-            appendToFile("Пользователь ввёл правильную последовательность, получив " + to_string(pointsAndAttempts) + " баллов\n");
+            appendToFile("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРІС‘Р» РїСЂР°РІРёР»СЊРЅСѓСЋ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ, РїРѕР»СѓС‡РёРІ " + to_string(pointsAndAttempts) + " Р±Р°Р»Р»РѕРІ\n");
             return;
         }
 
-        // Вывод цветов с неточным совпадением
+        // Р’С‹РІРѕРґ С†РІРµС‚РѕРІ СЃ РЅРµС‚РѕС‡РЅС‹Рј СЃРѕРІРїР°РґРµРЅРёРµРј
         vector<bool> matchedColorsWithoutOrder = colorMatchNoOrder(userColorsVector, colorsToGuess);
-        cout << "Цвета на неправильном месте, но присутствующие в списке: ";
+        cout << "Р¦РІРµС‚Р° РЅР° РЅРµРїСЂР°РІРёР»СЊРЅРѕРј РјРµСЃС‚Рµ, РЅРѕ РїСЂРёСЃСѓС‚СЃС‚РІСѓСЋС‰РёРµ РІ СЃРїРёСЃРєРµ: ";
         bool anyColor = false;
         for (int i = 0; i < 4; i++) {
             if (matchedColorsWithoutOrder[i] and (colorsCountMap[userColorsVector[i]] != 0)) {
@@ -119,11 +119,11 @@ void game(const vector<string> &allColors) {
                 if (!anyColor) anyColor = true;
             }
         }
-        if (!anyColor) cout << "Отсутствуют";
+        if (!anyColor) cout << "РћС‚СЃСѓС‚СЃС‚РІСѓСЋС‚";
         pointsAndAttempts--;
         cout << endl;
     }
-    cout << "Вы исчерпали все 10 попыток." << endl;
+    cout << "Р’С‹ РёСЃС‡РµСЂРїР°Р»Рё РІСЃРµ 10 РїРѕРїС‹С‚РѕРє." << endl;
 }
 
 int main() {
@@ -131,42 +131,42 @@ int main() {
     SetConsoleCP(1251);
     setlocale(LC_ALL, "Russian");
 
-    // Получаем список цветов и выводим пользователю
+    // РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє С†РІРµС‚РѕРІ Рё РІС‹РІРѕРґРёРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ
     all_colors = getAllColors(pathToColors);
 
-    // Спрашиваем пользователя хочет ли он узнать правила
+    // РЎРїСЂР°С€РёРІР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С…РѕС‡РµС‚ Р»Рё РѕРЅ СѓР·РЅР°С‚СЊ РїСЂР°РІРёР»Р°
     bool getRules;
-    getUserInput(getRules, "Введите '1' если хотите увидеть правила, иначе введите '0': "); // Обработка ошибок.
+    getUserInput(getRules, "Р’РІРµРґРёС‚Рµ '1' РµСЃР»Рё С…РѕС‚РёС‚Рµ СѓРІРёРґРµС‚СЊ РїСЂР°РІРёР»Р°, РёРЅР°С‡Рµ РІРІРµРґРёС‚Рµ '0': "); // РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє.
     if (getRules) {
-        cout << endl << "Игра \"Радуга\". Задача пользователя угадать порядок цветов и сами цвета в сгенерированной последовательности." << endl \
- << "За каждую попытку снимаются баллы: 10, если последовательность угадана с первого раза, 9 – со второго, 8 – с третьего и т.п." << endl << endl;
+        cout << endl << "РРіСЂР° \"Р Р°РґСѓРіР°\". Р—Р°РґР°С‡Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СѓРіР°РґР°С‚СЊ РїРѕСЂСЏРґРѕРє С†РІРµС‚РѕРІ Рё СЃР°РјРё С†РІРµС‚Р° РІ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅРѕР№ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё." << endl \
+ << "Р—Р° РєР°Р¶РґСѓСЋ РїРѕРїС‹С‚РєСѓ СЃРЅРёРјР°СЋС‚СЃСЏ Р±Р°Р»Р»С‹: 10, РµСЃР»Рё РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ СѓРіР°РґР°РЅР° СЃ РїРµСЂРІРѕРіРѕ СЂР°Р·Р°, 9 вЂ“ СЃРѕ РІС‚РѕСЂРѕРіРѕ, 8 вЂ“ СЃ С‚СЂРµС‚СЊРµРіРѕ Рё С‚.Рї." << endl << endl;
     }
 
-    // Начинаем процесс игры
+    // РќР°С‡РёРЅР°РµРј РїСЂРѕС†РµСЃСЃ РёРіСЂС‹
     bool play_again = true;
     while (play_again) {
         if (game_num == 0) {
             while (PlayerName.empty()) {
-                cout << "Введите имя пользователя: ";
+                cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ";
                 cin.ignore();
                 getline(std::cin, PlayerName);
                 cout << endl;
-                if (PlayerName.empty()) cout << "Имя не может быть пустым." << endl;
+                if (PlayerName.empty()) cout << "РРјСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј." << endl;
             }
-            appendToFile("------------ Играет пользователь: " + PlayerName + " ------------\n");
+            appendToFile("------------ РРіСЂР°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ: " + PlayerName + " ------------\n");
             game(all_colors);
         } else {
-            getUserInput(play_again, "Введите '1' если хотите сыграть еще раз, '0' если хотите выйти: "); // Обработка ошибок.
+            getUserInput(play_again, "Р’РІРµРґРёС‚Рµ '1' РµСЃР»Рё С…РѕС‚РёС‚Рµ СЃС‹РіСЂР°С‚СЊ РµС‰Рµ СЂР°Р·, '0' РµСЃР»Рё С…РѕС‚РёС‚Рµ РІС‹Р№С‚Рё: "); // РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє.
             if (!play_again) {
-                cout << "За " << game_num << " игр вы набрали " << allPoints << " баллов" << endl;
-                appendToFile("За " + to_string(game_num) + " игр пользователь " + PlayerName + " набрал " + to_string(allPoints) + " баллов" + "\n\n");
+                cout << "Р—Р° " << game_num << " РёРіСЂ РІС‹ РЅР°Р±СЂР°Р»Рё " << allPoints << " Р±Р°Р»Р»РѕРІ" << endl;
+                appendToFile("Р—Р° " + to_string(game_num) + " РёРіСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + PlayerName + " РЅР°Р±СЂР°Р» " + to_string(allPoints) + " Р±Р°Р»Р»РѕРІ" + "\n\n");
             } else game(all_colors);
         }
     }
     system("pause");
 }
 
-// Возвращает массив всех цветов из colors.txt
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РІСЃРµС… С†РІРµС‚РѕРІ РёР· colors.txt
 vector<string> getAllColors(const string &path) {
     std::vector<string> colors;
     string temp_string;
@@ -179,9 +179,9 @@ vector<string> getAllColors(const string &path) {
     return colors;
 }
 
-// Вывод всех возможных цветов перед игрой в консоль
+// Р’С‹РІРѕРґ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚РѕРІ РїРµСЂРµРґ РёРіСЂРѕР№ РІ РєРѕРЅСЃРѕР»СЊ
 void PrintAllColors(const std::vector<std::string> &allColors) {
-    std::cout << "Возможные доступные цвета: ";
+    std::cout << "Р’РѕР·РјРѕР¶РЅС‹Рµ РґРѕСЃС‚СѓРїРЅС‹Рµ С†РІРµС‚Р°: ";
     for (size_t i = 0; i < allColors.size(); ++i) {
         std::cout << allColors[i];
         if (i != allColors.size() - 1) std::cout << ", ";
@@ -207,8 +207,8 @@ vector<string> shuffleVector(const vector<string> &allColors, const bool unique_
 }
 
 string vectorToString(const vector <string> &vector) {
-    if (vector.empty()) return ""; // Возвращаем пустую строку для пустого вектора
-    string result = vector[0]; // Инициализируем результат первым элементом
+    if (vector.empty()) return ""; // Р’РѕР·РІСЂР°С‰Р°РµРј РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ РґР»СЏ РїСѓСЃС‚РѕРіРѕ РІРµРєС‚РѕСЂР°
+    string result = vector[0]; // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚ РїРµСЂРІС‹Рј СЌР»РµРјРµРЅС‚РѕРј
     for (size_t i = 1; i < vector.size(); ++i) result += ", " + vector[i];
     return result;
 }
@@ -217,10 +217,10 @@ vector<string> StringToVector(const string &colors_string) {
     std::vector<std::string> colors_vector;
     std::istringstream iss(colors_string);
 
-    // Разделяем строку на слова по запятой и добавляем их в вектор
+    // Р Р°Р·РґРµР»СЏРµРј СЃС‚СЂРѕРєСѓ РЅР° СЃР»РѕРІР° РїРѕ Р·Р°РїСЏС‚РѕР№ Рё РґРѕР±Р°РІР»СЏРµРј РёС… РІ РІРµРєС‚РѕСЂ
     std::string color;
     while (std::getline(iss >> std::ws, color, ',')) {
-        // Удаляем начальные и конечные пробелы у каждого слова
+        // РЈРґР°Р»СЏРµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ Рё РєРѕРЅРµС‡РЅС‹Рµ РїСЂРѕР±РµР»С‹ Сѓ РєР°Р¶РґРѕРіРѕ СЃР»РѕРІР°
         color.erase(std::remove_if(color.begin(), color.end(), ::isspace), color.end());
         colors_vector.push_back(color);
     }
@@ -260,8 +260,8 @@ bool getUserInput(bool &getInput, const string &message) {
         if (std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Ошибка ввода. Пожалуйста, введите '1' или '0'." << std::endl;
-        } else if (getInput != 0 && getInput != 1) std::cout << "Ошибка ввода. Пожалуйста, введите '1' или '0'." << std::endl;
+            std::cout << "РћС€РёР±РєР° РІРІРѕРґР°. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ '1' РёР»Рё '0'." << std::endl;
+        } else if (getInput != 0 && getInput != 1) std::cout << "РћС€РёР±РєР° РІРІРѕРґР°. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ '1' РёР»Рё '0'." << std::endl;
         else isValidInput = true;
     }
     return getInput;
