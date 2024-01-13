@@ -26,33 +26,33 @@ using std::endl;
 using std::to_string;
 
 
-void playGame(); // Функция для старта, перезапуска, выхода из программы
+void playGame(); // Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃС‚Р°СЂС‚Р°, РїРµСЂРµР·Р°РїСѓСЃРєР°, РІС‹С…РѕРґР° РёР· РїСЂРѕРіСЂР°РјРјС‹
 
-void game(const vector<string> &allColors, const string &PlayerName); // Основная функция игры
+void game(const vector<string> &allColors, const string &PlayerName); // РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РёРіСЂС‹
 
-vector<string> getAllColors(const string &path); // Возвращает массив всех цветов из colors.txt
+vector<string> getAllColors(const string &path); // Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РІСЃРµС… С†РІРµС‚РѕРІ РёР· colors.txt
 
-void PrintAllColors(const std::vector<std::string> &allColors); // Вывод всех возможных цветов перед игрой в консоль
+void PrintAllColors(const std::vector<std::string> &allColors); // Р’С‹РІРѕРґ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚РѕРІ РїРµСЂРµРґ РёРіСЂРѕР№ РІ РєРѕРЅСЃРѕР»СЊ
 
-vector<string> shuffleVector(const vector<string> &allColors, bool unique_sort); // Получение перемешенного вектора
+vector<string> shuffleVector(const vector<string> &allColors, bool unique_sort); // РџРѕР»СѓС‡РµРЅРёРµ РїРµСЂРµРјРµС€РµРЅРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
 
-vector<string> StringToVector(const string &colors_string); // Создание вектора из строки
+vector<string> StringToVector(const string &colors_string); // РЎРѕР·РґР°РЅРёРµ РІРµРєС‚РѕСЂР° РёР· СЃС‚СЂРѕРєРё
 
-string vectorToString(const vector<string> &vector); // Создание строки из вектора через точку с запятой
+string vectorToString(const vector<string> &vector); // РЎРѕР·РґР°РЅРёРµ СЃС‚СЂРѕРєРё РёР· РІРµРєС‚РѕСЂР° С‡РµСЂРµР· С‚РѕС‡РєСѓ СЃ Р·Р°РїСЏС‚РѕР№
 
-vector<bool> colorMatchOrderMatch(const vector<string> &userColors, const vector<string> &pcColors); // Проверка на точное совпадение
+vector<bool> colorMatchOrderMatch(const vector<string> &userColors, const vector<string> &pcColors); // РџСЂРѕРІРµСЂРєР° РЅР° С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
 
-vector<bool> colorMatchNoOrder(const vector<string> &userColors, const vector<string> &pcColors); // Проверка на неточное совпадение
+vector<bool> colorMatchNoOrder(const vector<string> &userColors, const vector<string> &pcColors); // РџСЂРѕРІРµСЂРєР° РЅР° РЅРµС‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
 
-bool getUserInput(bool &getInput, const string &message); // Обработка ввода bool-переменных
+bool getUserInput(bool &getInput, const string &message); // РћР±СЂР°Р±РѕС‚РєР° РІРІРѕРґР° bool-РїРµСЂРµРјРµРЅРЅС‹С…
 
-void appendToFile(const std::string &line); // Запись результата игры в файл
+void appendToFile(const std::string &line); // Р—Р°РїРёСЃСЊ СЂРµР·СѓР»СЊС‚Р°С‚Р° РёРіСЂС‹ РІ С„Р°Р№Р»
 
-bool fileExistance(const string &filename); // Проверка на существование файла
+bool fileExistance(const string &filename); // РџСЂРѕРІРµСЂРєР° РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ С„Р°Р№Р»Р°
 
-void configureHistoryFile(const string &filename); // Конфигурация файла истории игры
+void configureHistoryFile(const string &filename); // РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ С„Р°Р№Р»Р° РёСЃС‚РѕСЂРёРё РёРіСЂС‹
 
-void configureColorsFile(const string &filename); // Конфигурация файла цветов для игры
+void configureColorsFile(const string &filename); // РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ С„Р°Р№Р»Р° С†РІРµС‚РѕРІ РґР»СЏ РёРіСЂС‹
 
 
 #endif //UNTITLED_GAME_H

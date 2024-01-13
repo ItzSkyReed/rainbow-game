@@ -8,48 +8,48 @@ using std::endl;
 using std::to_string;
 
 
-const string pathToColors = "colors.txt"; // Путь до файла c цветами!
-const string pathToHistory = "game_history.txt"; // Путь до файла с историей игр!
-int games = 0; // Кол-во игр пользователя
-int allPoints = 0; // Кол-во цветов пользователя
+const string pathToColors = "colors.txt"; // РџСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° c С†РІРµС‚Р°РјРё!
+const string pathToHistory = "game_history.txt"; // РџСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° СЃ РёСЃС‚РѕСЂРёРµР№ РёРіСЂ!
+int games = 0; // РљРѕР»-РІРѕ РёРіСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+int allPoints = 0; // РљРѕР»-РІРѕ С†РІРµС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 void playGame() {
-    // Настройка файла с цветами для игры, создание файла и запись цветов если его не существует.
+    // РќР°СЃС‚СЂРѕР№РєР° С„Р°Р№Р»Р° СЃ С†РІРµС‚Р°РјРё РґР»СЏ РёРіСЂС‹, СЃРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р° Рё Р·Р°РїРёСЃСЊ С†РІРµС‚РѕРІ РµСЃР»Рё РµРіРѕ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.
     configureColorsFile(pathToColors);
-    // Настройка файла с историей игр, создание файла если его не существует.
+    // РќР°СЃС‚СЂРѕР№РєР° С„Р°Р№Р»Р° СЃ РёСЃС‚РѕСЂРёРµР№ РёРіСЂ, СЃРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р° РµСЃР»Рё РµРіРѕ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.
     configureHistoryFile(pathToHistory);
 
-    vector<string> allColors = getAllColors(pathToColors); // Тут хранятся цвета
-    string PlayerName; // Имя пользователя
+    vector<string> allColors = getAllColors(pathToColors); // РўСѓС‚ С…СЂР°РЅСЏС‚СЃСЏ С†РІРµС‚Р°
+    string PlayerName; // РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
     bool getRules;
-    getUserInput(getRules, "Введите '1' для просмотра правил, введите '0' для продолжения: ");
+    getUserInput(getRules, "Р’РІРµРґРёС‚Рµ '1' РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° РїСЂР°РІРёР», РІРІРµРґРёС‚Рµ '0' РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ: ");
     if (getRules) {
-        cout << "\nИгра \"Радуга\". Задача пользователя - угадать порядок из четырех цветов и сами цвета в последовательности.\n"
-             << "За каждую попытку снимаются баллы: 10, если угадано с первого раза, 9 – со второго, 8 – с третьего и т.п.\n\n";
+        cout << "\nРРіСЂР° \"Р Р°РґСѓРіР°\". Р—Р°РґР°С‡Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ - СѓРіР°РґР°С‚СЊ РїРѕСЂСЏРґРѕРє РёР· С‡РµС‚С‹СЂРµС… С†РІРµС‚РѕРІ Рё СЃР°РјРё С†РІРµС‚Р° РІ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё.\n"
+             << "Р—Р° РєР°Р¶РґСѓСЋ РїРѕРїС‹С‚РєСѓ СЃРЅРёРјР°СЋС‚СЃСЏ Р±Р°Р»Р»С‹: 10, РµСЃР»Рё СѓРіР°РґР°РЅРѕ СЃ РїРµСЂРІРѕРіРѕ СЂР°Р·Р°, 9 вЂ“ СЃРѕ РІС‚РѕСЂРѕРіРѕ, 8 вЂ“ СЃ С‚СЂРµС‚СЊРµРіРѕ Рё С‚.Рї.\n\n";
     }
 
     bool play_again = true;
     while (play_again) {
         if (games == 0) {
             while (PlayerName.empty()) {
-                cout << "Введите имя пользователя: ";
+                cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ";
                 cin.ignore();
                 getline(cin, PlayerName);
                 cout << endl;
-                if (PlayerName.empty()) cout << "Имя не может быть пустым." << endl;
+                if (PlayerName.empty()) cout << "РРјСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј." << endl;
             }
-            appendToFile("\n\n\n------------ Играет пользователь: " + PlayerName + " ------------\n");
+            appendToFile("\n\n\n------------ РРіСЂР°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ: " + PlayerName + " ------------\n");
         }
 
-        game(allColors, PlayerName); // Запуск игры
+        game(allColors, PlayerName); // Р—Р°РїСѓСЃРє РёРіСЂС‹
 
         if (games > 0) {
-            getUserInput(play_again, "Введите '1' для новой игры, '0' для выхода: ");
+            getUserInput(play_again, "Р’РІРµРґРёС‚Рµ '1' РґР»СЏ РЅРѕРІРѕР№ РёРіСЂС‹, '0' РґР»СЏ РІС‹С…РѕРґР°: ");
             if (!play_again) {
-                cout << "За " << games << " игр вы набрали " << allPoints << " баллов" << endl;
-                appendToFile("За " + to_string(games) + " игр пользователь " + PlayerName +
-                                  " набрал " + to_string(allPoints) + " баллов");
+                cout << "Р—Р° " << games << " РёРіСЂ РІС‹ РЅР°Р±СЂР°Р»Рё " << allPoints << " Р±Р°Р»Р»РѕРІ" << endl;
+                appendToFile("Р—Р° " + to_string(games) + " РёРіСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + PlayerName +
+                                  " РЅР°Р±СЂР°Р» " + to_string(allPoints) + " Р±Р°Р»Р»РѕРІ");
             }
         }
     }
@@ -58,78 +58,78 @@ void playGame() {
 
 
 void game(const vector<string> &allColors, const string &PlayerName) {
-    games += 1; // Увеличиваем счётчик игр
+    games += 1; // РЈРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРє РёРіСЂ
 
-    // Спрашиваем пользователя, хочет ли он чтобы цвета были уникальными
+    // РЎРїСЂР°С€РёРІР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, С…РѕС‡РµС‚ Р»Рё РѕРЅ С‡С‚РѕР±С‹ С†РІРµС‚Р° Р±С‹Р»Рё СѓРЅРёРєР°Р»СЊРЅС‹РјРё
     bool uniqueColorsMode;
-    // Обработка ошибок.
-    getUserInput(uniqueColorsMode, "Введите '1' если хотите чтобы цвета не повторялись, иначе введите '0': ");
+    // РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє.
+    getUserInput(uniqueColorsMode, "Р’РІРµРґРёС‚Рµ '1' РµСЃР»Рё С…РѕС‚РёС‚Рµ С‡С‚РѕР±С‹ С†РІРµС‚Р° РЅРµ РїРѕРІС‚РѕСЂСЏР»РёСЃСЊ, РёРЅР°С‡Рµ РІРІРµРґРёС‚Рµ '0': ");
     cout << endl;
-    vector<string> colorsToGuess = shuffleVector(allColors, uniqueColorsMode); // Создаем вектор цветов в зависимости от ответа
-    if (uniqueColorsMode) cout << "Выбран режим без повторения цветов." << endl;
-    else cout << "Выбран режим с повторением цветов." << endl;
+    vector<string> colorsToGuess = shuffleVector(allColors, uniqueColorsMode); // РЎРѕР·РґР°РµРј РІРµРєС‚РѕСЂ С†РІРµС‚РѕРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕС‚РІРµС‚Р°
+    if (uniqueColorsMode) cout << "Р’С‹Р±СЂР°РЅ СЂРµР¶РёРј Р±РµР· РїРѕРІС‚РѕСЂРµРЅРёСЏ С†РІРµС‚РѕРІ." << endl;
+    else cout << "Р’С‹Р±СЂР°РЅ СЂРµР¶РёРј СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ." << endl;
 
-    PrintAllColors(allColors); // Сообщаем пользователю о всех возможных цветах (из файла colors.txt)
+    PrintAllColors(allColors); // РЎРѕРѕР±С‰Р°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ Рѕ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚Р°С… (РёР· С„Р°Р№Р»Р° colors.txt)
 
-    string gameType = (uniqueColorsMode) ? "без повторений цветов" : "с повторением цветов"; // Запись в файл строк с информацией об игре.
+    string gameType = (uniqueColorsMode) ? "Р±РµР· РїРѕРІС‚РѕСЂРµРЅРёР№ С†РІРµС‚РѕРІ" : "СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ"; // Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р» СЃС‚СЂРѕРє СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РёРіСЂРµ.
     string correctColorsString = vectorToString(colorsToGuess);
-    appendToFile("Игра " + to_string(games) + "; Режим: " + gameType +
-                      "; Правильная последовательность цветов: " + correctColorsString + ".");
+    appendToFile("РРіСЂР° " + to_string(games) + "; Р РµР¶РёРј: " + gameType +
+                      "; РџСЂР°РІРёР»СЊРЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ С†РІРµС‚РѕРІ: " + correctColorsString + ".");
 
-    // Процесс игры
-    cout << "Игра началась." << endl << endl;
+    // РџСЂРѕС†РµСЃСЃ РёРіСЂС‹
+    cout << "РРіСЂР° РЅР°С‡Р°Р»Р°СЃСЊ." << endl << endl;
     cin.ignore();
     int pointsAndAttempts = 10;
 
     while (pointsAndAttempts > 0) {
-        // Создаем словарь, чтобы хранить, сколько раз каждый цвет встречается (полезно для режима с повторением цветов)
+        // РЎРѕР·РґР°РµРј СЃР»РѕРІР°СЂСЊ, С‡С‚РѕР±С‹ С…СЂР°РЅРёС‚СЊ, СЃРєРѕР»СЊРєРѕ СЂР°Р· РєР°Р¶РґС‹Р№ С†РІРµС‚ РІСЃС‚СЂРµС‡Р°РµС‚СЃСЏ (РїРѕР»РµР·РЅРѕ РґР»СЏ СЂРµР¶РёРјР° СЃ РїРѕРІС‚РѕСЂРµРЅРёРµРј С†РІРµС‚РѕРІ)
         std::map<string, short> colorsCountMap;
-        for (const string &str: colorsToGuess) { // Проходим по вектору и увеличиваем счетчик для каждой строки в map
+        for (const string &str: colorsToGuess) { // РџСЂРѕС…РѕРґРёРј РїРѕ РІРµРєС‚РѕСЂСѓ Рё СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡РµС‚С‡РёРє РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё РІ map
             colorsCountMap[str]++;
         }
 
-        cout << "Попыток осталось: " << pointsAndAttempts << endl; // Сообщаем пользователю количество оставшихся попыток.
+        cout << "РџРѕРїС‹С‚РѕРє РѕСЃС‚Р°Р»РѕСЃСЊ: " << pointsAndAttempts << endl; // РЎРѕРѕР±С‰Р°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕСЃС‚Р°РІС€РёС…СЃСЏ РїРѕРїС‹С‚РѕРє.
 
-        // Создание вектора из строки цветов пользователя
+        // РЎРѕР·РґР°РЅРёРµ РІРµРєС‚РѕСЂР° РёР· СЃС‚СЂРѕРєРё С†РІРµС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         vector<string> userColorsVector;
         string colorsFromUser;
-        do { // Проверка на правильность введенной строки
-            cout << "Введите четыре цвета через запятую с пробелом: ";
+        do { // РџСЂРѕРІРµСЂРєР° РЅР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РІРІРµРґРµРЅРЅРѕР№ СЃС‚СЂРѕРєРё
+            cout << "Р’РІРµРґРёС‚Рµ С‡РµС‚С‹СЂРµ С†РІРµС‚Р° С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ СЃ РїСЂРѕР±РµР»РѕРј: ";
             getline(cin, colorsFromUser);
             userColorsVector = StringToVector(colorsFromUser);
             if (userColorsVector.size() != 4) {
-                cout << "Вы ввели не 4 цвета. Введите строку снова." << endl;
+                cout << "Р’С‹ РІРІРµР»Рё РЅРµ 4 С†РІРµС‚Р°. Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ СЃРЅРѕРІР°." << endl;
             }
 
         } while (userColorsVector.size() != 4);
 
-        // Запись в файл актуального количества попыток пользователя и цвета, которые он ввёл
-        appendToFile("Попытка " + to_string(10 - pointsAndAttempts) + "; Цвета пользователя: " + colorsFromUser);
+        // Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р» Р°РєС‚СѓР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РїРѕРїС‹С‚РѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё С†РІРµС‚Р°, РєРѕС‚РѕСЂС‹Рµ РѕРЅ РІРІС‘Р»
+        appendToFile("РџРѕРїС‹С‚РєР° " + to_string(10 - pointsAndAttempts) + "; Р¦РІРµС‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: " + colorsFromUser);
 
-        // Вывод цветов с совпадением места
+        // Р’С‹РІРѕРґ С†РІРµС‚РѕРІ СЃ СЃРѕРІРїР°РґРµРЅРёРµРј РјРµСЃС‚Р°
         vector<bool> matchedColors = colorMatchOrderMatch(userColorsVector, colorsToGuess);
         for (int i = 0; i < 4; i++) {
             string color;
             if (matchedColors[i]) {
                 color = userColorsVector[i];
-                colorsCountMap[color]--; // Уменьшаем оставшееся кол-во определенного цвета в словаре
-                color[0] = (char)(std::toupper((unsigned char)(color[0]))); // Меняем первую букву на заглавную для красоты
-            } else color = "Не угадан";
-            cout << "Цвет " << i + 1 << ": " << color << endl;
+                colorsCountMap[color]--; // РЈРјРµРЅСЊС€Р°РµРј РѕСЃС‚Р°РІС€РµРµСЃСЏ РєРѕР»-РІРѕ РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ С†РІРµС‚Р° РІ СЃР»РѕРІР°СЂРµ
+                color[0] = (char)(std::toupper((unsigned char)(color[0]))); // РњРµРЅСЏРµРј РїРµСЂРІСѓСЋ Р±СѓРєРІСѓ РЅР° Р·Р°РіР»Р°РІРЅСѓСЋ РґР»СЏ РєСЂР°СЃРѕС‚С‹
+            } else color = "РќРµ СѓРіР°РґР°РЅ";
+            cout << "Р¦РІРµС‚ " << i + 1 << ": " << color << endl;
         }
 
-        // Проверка на победу
+        // РџСЂРѕРІРµСЂРєР° РЅР° РїРѕР±РµРґСѓ
         if (std::equal(colorsToGuess.begin(), colorsToGuess.end(), userColorsVector.begin())) {
-            cout << PlayerName << ", вы победили, набрав " << pointsAndAttempts << " баллов!" << endl;
+            cout << PlayerName << ", РІС‹ РїРѕР±РµРґРёР»Рё, РЅР°Р±СЂР°РІ " << pointsAndAttempts << " Р±Р°Р»Р»РѕРІ!" << endl;
             allPoints += pointsAndAttempts;
-            appendToFile("\nПользователь ввёл правильную последовательность, получив " +
-            to_string(pointsAndAttempts) + " баллов\n\n");
+            appendToFile("\nРџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРІС‘Р» РїСЂР°РІРёР»СЊРЅСѓСЋ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ, РїРѕР»СѓС‡РёРІ " +
+            to_string(pointsAndAttempts) + " Р±Р°Р»Р»РѕРІ\n\n");
             return;
         }
 
-        // Вывод цветов с присутствием в списке
+        // Р’С‹РІРѕРґ С†РІРµС‚РѕРІ СЃ РїСЂРёСЃСѓС‚СЃС‚РІРёРµРј РІ СЃРїРёСЃРєРµ
         vector<bool> matchedColorsWithoutOrder = colorMatchNoOrder(userColorsVector, colorsToGuess);
-        cout << "Цвета на неправильном месте, но присутствующие в списке: ";
+        cout << "Р¦РІРµС‚Р° РЅР° РЅРµРїСЂР°РІРёР»СЊРЅРѕРј РјРµСЃС‚Рµ, РЅРѕ РїСЂРёСЃСѓС‚СЃС‚РІСѓСЋС‰РёРµ РІ СЃРїРёСЃРєРµ: ";
         bool anyColor = false;
         for (int i = 0; i < 4; i++) {
             if (matchedColorsWithoutOrder[i] and (colorsCountMap[userColorsVector[i]] != 0)) {
@@ -139,23 +139,23 @@ void game(const vector<string> &allColors, const string &PlayerName) {
                 if (!anyColor) anyColor = true;
             }
         }
-        if (!anyColor) cout << "Отсутствуют";
+        if (!anyColor) cout << "РћС‚СЃСѓС‚СЃС‚РІСѓСЋС‚";
         pointsAndAttempts--;
         cout << endl;
     }
-    cout << "Вы не смогли угадать цвета за 10 попыток." << endl;
-    cout << "Список цветов: " << correctColorsString << "." << endl;
-    appendToFile("\n" + PlayerName + " не смог отгадать комбинацию цветов.\n\n");
+    cout << "Р’С‹ РЅРµ СЃРјРѕРіР»Рё СѓРіР°РґР°С‚СЊ С†РІРµС‚Р° Р·Р° 10 РїРѕРїС‹С‚РѕРє." << endl;
+    cout << "РЎРїРёСЃРѕРє С†РІРµС‚РѕРІ: " << correctColorsString << "." << endl;
+    appendToFile("\n" + PlayerName + " РЅРµ СЃРјРѕРі РѕС‚РіР°РґР°С‚СЊ РєРѕРјР±РёРЅР°С†РёСЋ С†РІРµС‚РѕРІ.\n\n");
 }
 
 
-// Возвращает массив всех цветов из colors.txt
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РІСЃРµС… С†РІРµС‚РѕРІ РёР· colors.txt
 vector<string> getAllColors(const string &path) {
     vector<string> colors;
     string temp_string;
     std::ifstream file(path);
     while (getline(file, temp_string)) {
-        if (!temp_string.empty()) { // Проверяем, что строка не пустая, прежде чем добавить её в вектор
+        if (!temp_string.empty()) { // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЃС‚СЂРѕРєР° РЅРµ РїСѓСЃС‚Р°СЏ, РїСЂРµР¶РґРµ С‡РµРј РґРѕР±Р°РІРёС‚СЊ РµС‘ РІ РІРµРєС‚РѕСЂ
             colors.push_back(temp_string);
         }
     }
@@ -163,9 +163,9 @@ vector<string> getAllColors(const string &path) {
     return colors;
 }
 
-// Вывод всех возможных цветов в консоль
+// Р’С‹РІРѕРґ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… С†РІРµС‚РѕРІ РІ РєРѕРЅСЃРѕР»СЊ
 void PrintAllColors(const vector<string> &allColors) {
-    cout << "Возможные доступные цвета: ";
+    cout << "Р’РѕР·РјРѕР¶РЅС‹Рµ РґРѕСЃС‚СѓРїРЅС‹Рµ С†РІРµС‚Р°: ";
     for (size_t i = 0; i < allColors.size(); ++i) {
         cout << allColors[i];
         if (i != allColors.size() - 1) cout << ", ";
@@ -175,7 +175,7 @@ void PrintAllColors(const vector<string> &allColors) {
     cout << endl;
 }
 
-// Перемешивание вектора двумя способами - с сохранением уникальных и без сохранения
+// РџРµСЂРµРјРµС€РёРІР°РЅРёРµ РІРµРєС‚РѕСЂР° РґРІСѓРјСЏ СЃРїРѕСЃРѕР±Р°РјРё - СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј СѓРЅРёРєР°Р»СЊРЅС‹С… Рё Р±РµР· СЃРѕС…СЂР°РЅРµРЅРёСЏ
 vector<string> shuffleVector(const vector<string> &allColors, const bool unique_sort) {
     vector<string> shuffledColors;
     if (unique_sort) {
@@ -191,35 +191,35 @@ vector<string> shuffleVector(const vector<string> &allColors, const bool unique_
     return shuffledColors;
 }
 
-// Конвертация вектора в строку через запятую
+// РљРѕРЅРІРµСЂС‚Р°С†РёСЏ РІРµРєС‚РѕСЂР° РІ СЃС‚СЂРѕРєСѓ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ
 string vectorToString(const vector <string> &vector) {
-    if (vector.empty()) return ""; // Возвращаем пустую строку для пустого вектора
-    string result = vector[0]; // Инициализируем результат первым элементом
+    if (vector.empty()) return ""; // Р’РѕР·РІСЂР°С‰Р°РµРј РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ РґР»СЏ РїСѓСЃС‚РѕРіРѕ РІРµРєС‚РѕСЂР°
+    string result = vector[0]; // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚ РїРµСЂРІС‹Рј СЌР»РµРјРµРЅС‚РѕРј
     for (size_t i = 1; i < vector.size(); ++i) result += ", " + vector[i];
     return result;
 }
 
-// Конвертация строки в вектор, разделитель - запятая.
+// РљРѕРЅРІРµСЂС‚Р°С†РёСЏ СЃС‚СЂРѕРєРё РІ РІРµРєС‚РѕСЂ, СЂР°Р·РґРµР»РёС‚РµР»СЊ - Р·Р°РїСЏС‚Р°СЏ.
 vector<string> StringToVector(const string &colors_string) {
     vector<string> colors_vector;
     std::istringstream iss(colors_string);
     string color;
-    while (getline(iss >> std::ws, color, ',')) { // Разделяем строку на слова по запятой и добавляем их в вектор
-        // Удаление начальных и конечных пробелов у каждого слова
+    while (getline(iss >> std::ws, color, ',')) { // Р Р°Р·РґРµР»СЏРµРј СЃС‚СЂРѕРєСѓ РЅР° СЃР»РѕРІР° РїРѕ Р·Р°РїСЏС‚РѕР№ Рё РґРѕР±Р°РІР»СЏРµРј РёС… РІ РІРµРєС‚РѕСЂ
+        // РЈРґР°Р»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Рё РєРѕРЅРµС‡РЅС‹С… РїСЂРѕР±РµР»РѕРІ Сѓ РєР°Р¶РґРѕРіРѕ СЃР»РѕРІР°
         color.erase(std::remove_if(color.begin(), color.end(), ::isspace), color.end());
         colors_vector.push_back(color);
     }
     return colors_vector;
 }
 
-// Возвращение вектора, содержащего true (совпадение цвета) или false (несовпадение цвета) по индексам цветов пользователя
+// Р’РѕР·РІСЂР°С‰РµРЅРёРµ РІРµРєС‚РѕСЂР°, СЃРѕРґРµСЂР¶Р°С‰РµРіРѕ true (СЃРѕРІРїР°РґРµРЅРёРµ С†РІРµС‚Р°) РёР»Рё false (РЅРµСЃРѕРІРїР°РґРµРЅРёРµ С†РІРµС‚Р°) РїРѕ РёРЅРґРµРєСЃР°Рј С†РІРµС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 vector<bool> colorMatchOrderMatch(const vector<string> &userColors, const vector<string> &pcColors) {
     vector<bool> sortedColors;
     for (size_t i = 0; i < userColors.size(); ++i) sortedColors.push_back(userColors[i] == pcColors[i]);
     return sortedColors;
 }
 
-// Возвращение вектора, содержащего true (наличие цвета в списке правильных) или false (отсутствие цвета в списке правильных)
+// Р’РѕР·РІСЂР°С‰РµРЅРёРµ РІРµРєС‚РѕСЂР°, СЃРѕРґРµСЂР¶Р°С‰РµРіРѕ true (РЅР°Р»РёС‡РёРµ С†РІРµС‚Р° РІ СЃРїРёСЃРєРµ РїСЂР°РІРёР»СЊРЅС‹С…) РёР»Рё false (РѕС‚СЃСѓС‚СЃС‚РІРёРµ С†РІРµС‚Р° РІ СЃРїРёСЃРєРµ РїСЂР°РІРёР»СЊРЅС‹С…)
 vector<bool> colorMatchNoOrder(const vector<string> &userColors, const vector<string> &pcColors) {
     vector<bool> sortedColors;
     for (const string &userColor: userColors) {
@@ -229,7 +229,7 @@ vector<bool> colorMatchNoOrder(const vector<string> &userColors, const vector<st
     return sortedColors;
 }
 
-// Дописывание в файл строк (используется для записи истории игры)
+// Р”РѕРїРёСЃС‹РІР°РЅРёРµ РІ С„Р°Р№Р» СЃС‚СЂРѕРє (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ Р·Р°РїРёСЃРё РёСЃС‚РѕСЂРёРё РёРіСЂС‹)
 void appendToFile(const std::string &line) {
     std::ofstream file(pathToHistory, std::ios::app);
     if (file.is_open()) {
@@ -237,13 +237,13 @@ void appendToFile(const std::string &line) {
     }
 }
 
-// Безопасное чтение bool переменных пользователя
+// Р‘РµР·РѕРїР°СЃРЅРѕРµ С‡С‚РµРЅРёРµ bool РїРµСЂРµРјРµРЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 bool getUserInput(bool &getInput, const std::string &message) {
     while (true) {
         cout << message;
         cin >> getInput;
         if (std::cin.fail() || (getInput != 0 && getInput != 1)) {
-            std::cout << "Ошибка ввода. Пожалуйста, введите '1' или '0'." << endl;
+            std::cout << "РћС€РёР±РєР° РІРІРѕРґР°. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ '1' РёР»Рё '0'." << endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else break;
@@ -251,35 +251,35 @@ bool getUserInput(bool &getInput, const std::string &message) {
     return getInput;
 }
 
-// Проверка на существование файла
+// РџСЂРѕРІРµСЂРєР° РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ С„Р°Р№Р»Р°
 bool fileExistance(const string &filename) {
     bool exist = std::filesystem::exists(filename);
     return exist;
 }
 
-// Создание файла colors.txt и запись стандартных цветов при отсутствии
+// РЎРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р° colors.txt Рё Р·Р°РїРёСЃСЊ СЃС‚Р°РЅРґР°СЂС‚РЅС‹С… С†РІРµС‚РѕРІ РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё
 void configureColorsFile(const string &filename) {
     if (fileExistance(filename)) {
-        cout << "Файл с цветами успешно найден." << endl;
+        cout << "Р¤Р°Р№Р» СЃ С†РІРµС‚Р°РјРё СѓСЃРїРµС€РЅРѕ РЅР°Р№РґРµРЅ." << endl;
     } else {
-        cout << "Файл с историей игр не был найден. Создание нового файла и запись стандартных цветов." << endl;
+        cout << "Р¤Р°Р№Р» СЃ РёСЃС‚РѕСЂРёРµР№ РёРіСЂ РЅРµ Р±С‹Р» РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ С„Р°Р№Р»Р° Рё Р·Р°РїРёСЃСЊ СЃС‚Р°РЅРґР°СЂС‚РЅС‹С… С†РІРµС‚РѕРІ." << endl;
         std::ofstream file;
         file.open("colors.txt");
         if (file.is_open()) {
-            file << "красный\nсиний\nзелёный\nжёлтый\nбелый\nчёрный\nголубой\nрозовый\nфиолетовый\nсерый\nкоричневый\nоранжевый";
+            file << "РєСЂР°СЃРЅС‹Р№\nСЃРёРЅРёР№\nР·РµР»С‘РЅС‹Р№\nР¶С‘Р»С‚С‹Р№\nР±РµР»С‹Р№\nС‡С‘СЂРЅС‹Р№\nРіРѕР»СѓР±РѕР№\nСЂРѕР·РѕРІС‹Р№\nС„РёРѕР»РµС‚РѕРІС‹Р№\nСЃРµСЂС‹Р№\nРєРѕСЂРёС‡РЅРµРІС‹Р№\nРѕСЂР°РЅР¶РµРІС‹Р№";
         }
         file.close();
     }
 }
 
-// Создание файла game_history.txt при его отсутствие
+// РЎРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р° game_history.txt РїСЂРё РµРіРѕ РѕС‚СЃСѓС‚СЃС‚РІРёРµ
 void configureHistoryFile(const string &filename) {
     if (fileExistance(filename)) {
-        cout << "Файл с историей игр успешно найден." << endl << endl;
+        cout << "Р¤Р°Р№Р» СЃ РёСЃС‚РѕСЂРёРµР№ РёРіСЂ СѓСЃРїРµС€РЅРѕ РЅР°Р№РґРµРЅ." << endl << endl;
     } else {
-        cout << "Файл с историей игр не был найден. Создание нового файла." << endl << endl;
+        cout << "Р¤Р°Р№Р» СЃ РёСЃС‚РѕСЂРёРµР№ РёРіСЂ РЅРµ Р±С‹Р» РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ С„Р°Р№Р»Р°." << endl << endl;
         std::ofstream file;
-        // Открываем файл для записи и обрезаем его до нулевой длины
+        // РћС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё Рё РѕР±СЂРµР·Р°РµРј РµРіРѕ РґРѕ РЅСѓР»РµРІРѕР№ РґР»РёРЅС‹
         file.open(filename, std::ios::out | std::ios::trunc);
         file.close();
     }
